@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Life Partner</title>
+  <style>
+    body {
+      background-image: url('IMG_0127.jpg'); /* Replace 'IMG_0127.jpg' with your image path */
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    input {
+      padding: 10px;
+      border: 2px solid #ccc;
+      border-radius: 12px;
+      outline: none;
+      transition: border 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #4CAF50;
+    }
+
+    input[type="submit"] {
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      border-radius: 12px;
+    }
+
+    input[type="submit"]:hover {
+      background-color: #45a049;
+    }
+
+    #result {
+      font-size: 2em;
+      color: #4CAF50;
+      text-align: center;
+      margin-top: 20px;
+      opacity: 0; /* Start with the result hidden */
+      transform: translateY(-100vh); /* Initially hide the result at the top of the screen */
+      animation: loveBiteDown 1s forwards; /* Animation triggered when result is displayed */
+    }
+
+    @keyframes loveBiteDown {
+      0% {
+        opacity: 0;
+        transform: translateY(-100vh); /* Start from top of the screen */
+      }
+      50% {
+        opacity: 1;
+        transform: translateY(30px); /* Move down slightly */
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0); /* End at the center */
+      }
+    }
+
+    label {
+      font-size: 16px;
+    }
+
+    #errorMessage {
+      color: red;
+      font-size: 1.2em;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <center>
+    <font size="7" color="pink">Best Combination Couple</font>
+  </center>
+  <br><br><br><br><br>
+  <center>
+    <form id="partnerForm">
+      <label for="username">Your Name:</label>
+      <input type="text" id="username" name="username" placeholder="Enter your Name"><br><br>
+
+      <label for="partnerName">Partner Name:</label>
+      <input type="text" id="partnerName" name="partnerName" placeholder="Enter your Partner's Name"><br><br>
+
+      <label for="anniversaryDate">Anniversary Date:</label>
+      <input type="date" id="anniversaryDate" name="anniversaryDate"><br><br>
+
+      <input type="submit" value="Submit">
+    </form>
+
+    <!-- Error message when inputs are missing -->
+    <div id="errorMessage"></div>
+
+    <!-- Display the random percentage result -->
+    <div id="result"></div>
+  </center>
+
+  <script>
+    // Function to generate a random percentage between 1 and 1000
+    function generateRandomPercentage() {
+      return Math.floor(Math.random() * 1000) + 1; // Generates a random number between 1 and 1000
+    }
+
+    // Handle form submission
+    document.getElementById("partnerForm").addEventListener("submit", function(event) {
+      event.preventDefault(); // Prevent the form from submitting (reloading the page)
+
+      // Get the user input values
+      const username = document.getElementById("username").value;
+      const partnerName = document.getElementById("partnerName").value;
+      const anniversaryDate = document.getElementById("anniversaryDate").value;
+
+      // Check if all inputs are filled
+      if (!username || !partnerName || !anniversaryDate) {
+        // Display an error message if any field is empty
+        document.getElementById("errorMessage").textContent = "Please fill in all fields!";
+        document.getElementById("result").textContent = ""; // Clear previous result if any
+        return;
+      }
+
+      // Clear the error message if all fields are filled
+      document.getElementById("errorMessage").textContent = "";
+
+      // Generate random percentage
+      const randomPercentage = generateRandomPercentage();
+
+      // Display the result with animation
+      const resultDiv = document.getElementById("result");
+      resultDiv.textContent = `Your Compatibility Percentage is: ${randomPercentage}%`;
+
+      // Trigger animation by resetting it (for repeated submissions)
+      resultDiv.style.animation = 'none'; // Reset animation
+      resultDiv.offsetHeight; // Trigger reflow to restart the animation
+      resultDiv.style.animation = 'loveBiteDown 1s forwards'; // Reapply the animation
+    });
+  </script>
+
+</body>
+</html>
